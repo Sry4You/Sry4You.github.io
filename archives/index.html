@@ -1,1 +1,127 @@
-extends includes/layout.pug block content include ./includes/mixins/article-sort.pug #archive .article-sort-title= `${_p('page.articles')} - ${getArchiveLength()}` +articleSort(page.posts) include includes/pagination.pug
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>归档 | SryYa'Bolg</title><meta name="author" content="Sry4Ya"><meta name="copyright" content="Sry4Ya"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SryYa的个人博客，记录技术成长、生活感悟与持续进步的过程。Progress, not perfection."><meta property="og:type" content="website"><meta property="og:title" content="归档"><meta property="og:url" content="https://sry4you.github.io/archives/index.html"><meta property="og:site_name" content="SryYa&#39;Bolg"><meta property="og:description" content="SryYa的个人博客，记录技术成长、生活感悟与持续进步的过程。Progress, not perfection."><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://sry4you.github.io/img/butterfly-icon.png"><meta property="article:author" content="Sry4Ya"><meta property="article:tag" content="博客, 技术, 开发, 生活记录, Sry4You"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://sry4you.github.io/img/butterfly-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://sry4you.github.io/archives/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>(() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"归档",isHighlightShrink:!1,isToc:!1,pageType:"archive"}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SryYa'Bolg</span></a></span><div id="menus"></div></nav><div id="page-site-info"><h1 id="site-title">归档</h1></div></header><main class="layout" id="content-inner"><div id="archive"><div class="article-sort-title">全部文章 - 10</div><div class="article-sort"><div class="article-sort-item year">2026</div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-10T16:00:00.000Z" title="发表于 2026-03-11 00:00:00">2026-03-11</time></div><a class="article-sort-item-title" href="/2026/03/11/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%EF%BC%9AJava%E9%87%8C%E7%9A%84Collection%E5%92%8CMap/" title="集合框架：Java里的Collection和Map">集合框架：Java里的Collection和Map</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-10T16:00:00.000Z" title="发表于 2026-03-11 00:00:00">2026-03-11</time></div><a class="article-sort-item-title" href="/2026/03/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="面向对象：封装，继承，多态的艺术">面向对象：封装，继承，多态的艺术</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-08T16:00:00.000Z" title="发表于 2026-03-09 00:00:00">2026-03-09</time></div><a class="article-sort-item-title" href="/2026/03/09/Java%E5%90%8E%E7%AB%AF%E7%9F%A5%E8%AF%86%E6%A0%91/" title="Java后端知识树">Java后端知识树</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-08T16:00:00.000Z" title="发表于 2026-03-09 00:00:00">2026-03-09</time></div><a class="article-sort-item-title" href="/2026/03/09/%E4%BB%8E%E6%BA%90%E7%A0%81%E7%9C%8B%20HashMap%20%E7%9A%84%E6%BC%94%E8%BF%9B%EF%BC%9AJDK%207%20%E5%88%B0%20JDK%208%20%E7%9A%84%E7%BA%A2%E9%BB%91%E6%A0%91%E8%BD%AC%E5%8C%96%E9%80%BB%E8%BE%91/" title="从源码看HashMap：JDK 7到JDK 8的HashMap的优化">从源码看HashMap：JDK 7到JDK 8的HashMap的优化</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-07T16:00:00.000Z" title="发表于 2026-03-08 00:00:00">2026-03-08</time></div><a class="article-sort-item-title" href="/2026/03/08/Caffeine+Redis%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E6%9E%B6%E6%9E%84+Kafka%E5%BC%82%E6%AD%A5%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%AE%80%E5%8D%95%E5%AE%9E%E6%88%98/" title="Caffeine+Redis二级缓存架构+Kafka异步删除缓存简单实战">Caffeine+Redis二级缓存架构+Kafka异步删除缓存简单实战</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-07T16:00:00.000Z" title="发表于 2026-03-08 00:00:00">2026-03-08</time></div><a class="article-sort-item-title" href="/2026/03/08/%E8%AF%A6%E8%A7%A3MVCC%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6/" title="MVCC的实现原理">MVCC的实现原理</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-07T16:00:00.000Z" title="发表于 2026-03-08 00:00:00">2026-03-08</time></div><a class="article-sort-item-title" href="/2026/03/08/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%92%8C%E5%89%8D%E7%BC%80%E5%92%8C%EF%BC%8B%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E8%A7%A3%E5%86%B3LeetCode209.%20%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/" title="滑动窗口||前缀和＋二分查找 解决LeetCode209.长度最小的子数组">滑动窗口||前缀和＋二分查找 解决LeetCode209.长度最小的子数组</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-06T16:00:00.000Z" title="发表于 2026-03-07 00:00:00">2026-03-07</time></div><a class="article-sort-item-title" href="/2026/03/07/Redis-%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="缓存空值和布隆过滤器解决缓存穿透">缓存空值和布隆过滤器解决缓存穿透</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-05T16:00:00.000Z" title="发表于 2026-03-06 00:00:00">2026-03-06</time></div><a class="article-sort-item-title" href="/2026/03/06/LeetCode146.LRU%E7%BC%93%E5%AD%98/" title="LeetCode146.LRU缓存">LeetCode146.LRU缓存</a></div></div><div class="article-sort-item no-article-cover"><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2026-03-05T16:00:00.000Z" title="发表于 2026-03-06 00:00:00">2026-03-06</time></div><a class="article-sort-item-title" href="/2026/03/06/Redis%E5%AD%98%E5%82%A8Token%E5%AE%9E%E7%8E%B0%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95%E6%96%B9%E6%A1%88/" title="Redis存储Token实现短信登录方案">Redis存储Token实现短信登录方案</a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="author-info-name">Sry4Ya</div><div class="author-info-description">SryYa的个人博客，记录技术成长、生活感悟与持续进步的过程。Progress, not perfection.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/11/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%EF%BC%9AJava%E9%87%8C%E7%9A%84Collection%E5%92%8CMap/" title="集合框架：Java里的Collection和Map">集合框架：Java里的Collection和Map</a><time datetime="2026-03-10T16:00:00.000Z" title="发表于 2026-03-11 00:00:00">2026-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="面向对象：封装，继承，多态的艺术">面向对象：封装，继承，多态的艺术</a><time datetime="2026-03-10T16:00:00.000Z" title="发表于 2026-03-11 00:00:00">2026-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/09/Java%E5%90%8E%E7%AB%AF%E7%9F%A5%E8%AF%86%E6%A0%91/" title="Java后端知识树">Java后端知识树</a><time datetime="2026-03-08T16:00:00.000Z" title="发表于 2026-03-09 00:00:00">2026-03-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/09/%E4%BB%8E%E6%BA%90%E7%A0%81%E7%9C%8B%20HashMap%20%E7%9A%84%E6%BC%94%E8%BF%9B%EF%BC%9AJDK%207%20%E5%88%B0%20JDK%208%20%E7%9A%84%E7%BA%A2%E9%BB%91%E6%A0%91%E8%BD%AC%E5%8C%96%E9%80%BB%E8%BE%91/" title="从源码看HashMap：JDK 7到JDK 8的HashMap的优化">从源码看HashMap：JDK 7到JDK 8的HashMap的优化</a><time datetime="2026-03-08T16:00:00.000Z" title="发表于 2026-03-09 00:00:00">2026-03-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/08/Caffeine+Redis%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E6%9E%B6%E6%9E%84+Kafka%E5%BC%82%E6%AD%A5%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%AE%80%E5%8D%95%E5%AE%9E%E6%88%98/" title="Caffeine+Redis二级缓存架构+Kafka异步删除缓存简单实战">Caffeine+Redis二级缓存架构+Kafka异步删除缓存简单实战</a><time datetime="2026-03-07T16:00:00.000Z" title="发表于 2026-03-08 00:00:00">2026-03-08</time></div></div></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i> <span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026 </span><span class="card-archive-list-count">10</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">10</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastpushdate="2026-03-12T04:08:56.012Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Sry4Ya</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
