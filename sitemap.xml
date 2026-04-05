@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://sry4you.github.io/2026/04/05/%E6%83%85%E4%BE%A3%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/</loc>
+    
+    <lastmod>2026-04-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://sry4you.github.io/2026/03/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</loc>
     
     <lastmod>2026-03-15</lastmod>
@@ -121,7 +130,7 @@
 
   <url>
     <loc>https://sry4you.github.io/</loc>
-    <lastmod>2026-03-15</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
